@@ -18,6 +18,8 @@ create table filetype (
       , indexable           boolean             not null
       , diffable            boolean             not null
       , extension           varchar(32)         not null
+
+      , constraint filetypeid_pk primary key (filetypeid)
 );
 
 create table doctype (
