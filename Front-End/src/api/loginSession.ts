@@ -1,4 +1,4 @@
-import type { JWT, UserSession } from "../types/userSession";
+import type { JWT, UserSession } from "@/types/userSession";
 import { createGETRequest } from "./utils";
 
 /**

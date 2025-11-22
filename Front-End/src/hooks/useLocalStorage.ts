@@ -1,4 +1,4 @@
-import { getLocalStorageObject } from '../utils/localStorage';
+import { getLocalStorageObject } from '@/utils/localStorage';
 import { useState } from 'react';
 
 export function useLocalStorage<T>(key: string) {

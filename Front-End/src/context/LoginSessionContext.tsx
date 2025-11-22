@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { UserSession } from '../types/userSession';
+import type { UserSession } from '@/types/userSession';
 
 export interface LoginSession {
     userSession: UserSession | null;
