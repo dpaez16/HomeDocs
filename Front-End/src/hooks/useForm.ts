@@ -1,3 +1,4 @@
+import { objectCompare } from "@/utils/objectCompare";
 import { useEffect, useState } from "react";
 
 interface UseFormParams<T extends object> {
@@ -12,7 +13,9 @@ export function useForm<T extends object>(props: UseFormParams<T>) {
 
     useEffect(() => {
         const update = () => {
-            setFormData({ ...props.defaultValues });
+            if (!objectCompare(props.defaultValues, formData)) {
+                setFormData({ ...props.defaultValues });
+            }
         };
 
         update();
@@ -46,7 +49,7 @@ export function useForm<T extends object>(props: UseFormParams<T>) {
 
     return {
         formData,
-        isDirty: JSON.stringify(formData) !== JSON.stringify(props.defaultValues),
+        isDirty: !objectCompare(formData, props.defaultValues),
         isSubmitting,
         isValid,
         getFormValue: getValue,

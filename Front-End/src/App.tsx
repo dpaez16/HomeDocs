@@ -5,6 +5,7 @@ import type { UserSession } from "./types/userSession";
 import { LoginSessionContext, type LoginSession } from "./context/LoginSessionContext";
 import { Layout } from "./components/sidebar/layout";
 import { UserProfile } from "./components/user-profile/UserProfile";
+import { UsersPage } from "./components/admin/users/Users";
 
 export const App = () => {
     const { localStorageValue: userSession, setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -21,7 +22,8 @@ export const App = () => {
                 <Layout>
                     <div className='p-4'>
                         <Routes>
-                            <Route path='/' Component={UserProfile} />
+                            <Route path='/' element={<UserProfile />} />
+                            <Route path='/admin/users' element={<UsersPage />} />
                         </Routes>
                     </div>
                 </Layout>
@@ -35,7 +37,7 @@ export const AppNoSession = () => {
         <Router>
             <div className='flex justify-center items-center min-h-screen w-screen'>
                 <Routes>
-                    <Route path='/login' Component={LoginPage} />
+                    <Route path='/login' element={<LoginPage />} />
                 </Routes>
             </div>
         </Router>

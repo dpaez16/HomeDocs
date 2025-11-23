@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { User, Users2 } from "lucide-react"
 
 import {
     Sidebar,
@@ -10,57 +10,72 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
-// Menu items.
-const items = [
-    {
-        title: "Home",
-        url: "#",
-        icon: Home,
-    },
-    {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Settings",
-        url: "#",
-        icon: Settings,
-    },
-]
+import { useContext } from "react";
+import { LoginSessionContext } from "@/context/LoginSessionContext";
+import { constructFullName } from "@/utils/users";
+import { hasRight, Rights } from "@/utils/rights";
+import { Link } from "react-router-dom";
 
 export const AppSidebar = () => {
+    const { userSession } = useContext(LoginSessionContext);
+    const user = userSession!.user;
+
+    const readerAuthorItems = [
+        {
+            title: 'Edit Profile',
+            url: '/',
+            icon: User,
+        }
+    ];
+
+    const adminItems = [
+        {
+            title: 'Users',
+            url: '/admin/users',
+            icon: Users2,
+        },
+    ];
+
     return (
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel>{constructFullName(user, 'firstLast')}</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
+                            {readerAuthorItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <Link to={item.url}>
                                             <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
+                                            {item.title}
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
+                {
+                    hasRight(user.rights, Rights.Admin) &&
+                    <SidebarGroup>
+                        <SidebarGroupLabel>Administration</SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {adminItems.map((item) => (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild>
+                                            <Link to={item.url}>
+                                                <item.icon />
+                                                {item.title}
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                }
             </SidebarContent>
         </Sidebar>
     );
