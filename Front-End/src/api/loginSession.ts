@@ -29,7 +29,7 @@ export function loginUser(email: string, password: string) {
  * @param jwt The user's login session token.
  * @returns A promise resolving to true if the user has a valid login session, false otherwise.
  */
-export function handshake(jwt: JWT | null) {
+export function loginSessionHandshake(jwt: JWT | null) {
     if (!jwt) {
         return Promise.resolve(false);
     }
