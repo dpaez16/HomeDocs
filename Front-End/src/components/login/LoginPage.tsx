@@ -7,6 +7,7 @@ import { Spinner } from "../ui/spinner";
 import { loginUser } from "@/api/loginSession";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { UserSession } from "@/types/userSession";
+import { ComputerIcon } from "lucide-react";
 
 export const LoginPage = () => {
     const { setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -33,7 +34,10 @@ export const LoginPage = () => {
     return (
         <Card className='w-full max-w-sm'>
             <CardHeader>
-                <CardTitle>Login</CardTitle>
+                <CardTitle className='flex justify-center items-center'>
+                    {/* TODO: Use HomeDocs icon */}
+                    <ComputerIcon />
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <form className='flex flex-col gap-6'>

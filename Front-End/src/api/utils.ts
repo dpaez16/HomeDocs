@@ -1,4 +1,4 @@
-import type { JWT } from "../types/userInfo";
+import type { JWT } from "@/types/userSession";
 
 async function handleResponse(response: Response) {
     if (!response || (response.status !== 200 && response.status !== 201)) {
