@@ -11,7 +11,7 @@ import { validateEmail } from "@/utils/validators";
 import { FormSection } from "../ui/form/form-section";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { hasRight, Rights } from "@/utils/rights";
+import { addRight, hasRight, removeRight, Rights } from "@/utils/rights";
 import { Checkbox } from "../ui/checkbox";
 
 export const UserProfile = () => {
@@ -20,6 +20,7 @@ export const UserProfile = () => {
     const jwt = userSession!.jwt;
 
     const { data: user, loading, error } = useDataFetcher(() => fetchUser(userID, jwt));
+    const isAdmin = hasRight(user?.rights ?? 0, Rights.Admin);
 
     const form = useForm({
         defaultValues: {
@@ -99,18 +100,51 @@ export const UserProfile = () => {
                 </FormSection>
                 <FormSection>
                 {
-                    hasRight(form.formData.rights, Rights.Admin) &&
+                    isAdmin &&
                     <div className='flex flex-col gap-2'>
                         <div className='flex items-center gap-3'>
-                            <Checkbox id='reader' checked={hasRight(form.formData.rights, Rights.Reader)} />
+                            <Checkbox
+                                id='reader'
+                                checked={hasRight(form.formData.rights, Rights.Reader)}
+                                onCheckedChange={(checkedState) => {
+                                    const isChecked = !!checkedState.valueOf();
+                                    if (isChecked) {
+                                        form.setFormValue('rights', addRight(form.formData.rights, Rights.Reader));
+                                    } else {
+                                        form.setFormValue('rights', removeRight(form.formData.rights, Rights.Reader));
+                                    }
+                                }}
+                            />
                             <Label htmlFor='reader'>Reader</Label>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <Checkbox id='author' checked={hasRight(form.formData.rights, Rights.Author)} />
+                            <Checkbox
+                                id='author'
+                                checked={hasRight(form.formData.rights, Rights.Author)}
+                                onCheckedChange={(checkedState) => {
+                                    const isChecked = !!checkedState.valueOf();
+                                    if (isChecked) {
+                                        form.setFormValue('rights', addRight(form.formData.rights, Rights.Author));
+                                    } else {
+                                        form.setFormValue('rights', removeRight(form.formData.rights, Rights.Author));
+                                    }
+                                }}
+                            />
                             <Label htmlFor='author'>Author</Label>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <Checkbox id='admin' checked={hasRight(form.formData.rights, Rights.Admin)} />
+                            <Checkbox
+                                id='admin'
+                                checked={hasRight(form.formData.rights, Rights.Admin)}
+                                onCheckedChange={(checkedState) => {
+                                    const isChecked = !!checkedState.valueOf();
+                                    if (isChecked) {
+                                        form.setFormValue('rights', addRight(form.formData.rights, Rights.Admin));
+                                    } else {
+                                        form.setFormValue('rights', removeRight(form.formData.rights, Rights.Admin));
+                                    }
+                                }}
+                            />
                             <Label htmlFor='admin'>Administrator</Label>
                         </div>
                     </div>

@@ -8,3 +8,4 @@ export type User = {
 };
 
 export type UserID = User['userID'];
+export type UserRights = User['rights'];
