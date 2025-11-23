@@ -4,6 +4,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import type { UserSession } from "./types/userSession";
 import { LoginSessionContext, type LoginSession } from "./context/LoginSessionContext";
 import { Layout } from "./components/sidebar/layout";
+import { UserProfile } from "./components/user-profile/UserProfile";
 
 export const App = () => {
     const { localStorageValue: userSession, setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -20,7 +21,7 @@ export const App = () => {
                 <Layout>
                     <div className='p-4'>
                         <Routes>
-                            <Route path='/' Component={LoginPage} />
+                            <Route path='/' Component={UserProfile} />
                         </Routes>
                     </div>
                 </Layout>

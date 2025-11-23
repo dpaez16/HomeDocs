@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface UseFormParams<T extends object> {
     defaultValues: T;
@@ -9,6 +9,14 @@ interface UseFormParams<T extends object> {
 export function useForm<T extends object>(props: UseFormParams<T>) {
     const [formData, setFormData] = useState({ ...props.defaultValues });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        const update = () => {
+            setFormData({ ...props.defaultValues });
+        };
+
+        update();
+    }, [props.defaultValues]);
 
     const getValue = <K extends keyof T>(k: K) => {
         return formData[k];

@@ -8,6 +8,8 @@ import { loginUser } from "@/api/loginSession";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { UserSession } from "@/types/userSession";
 import { ComputerIcon } from "lucide-react";
+import { FormSection } from "@/components/ui/form/form-section";
+import { SubmitButton } from "../ui/form/submit-button";
 
 export const LoginPage = () => {
     const { setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -20,7 +22,7 @@ export const LoginPage = () => {
         validator: (formData) => !!formData.email && !!formData.password,
         onSubmit: async (formData) => {
             const { email, password } = formData;
-            loginUser(email, password)
+            await loginUser(email, password)
                 .then(userSession => {
                     setUserSession(userSession);
                     window.location.href = '/';
@@ -41,7 +43,7 @@ export const LoginPage = () => {
             </CardHeader>
             <CardContent>
                 <form className='flex flex-col gap-6'>
-                    <div className='grid gap-2'>
+                    <FormSection>
                         <Label htmlFor='email'>Email</Label>
                         <Input
                             id='email'
@@ -50,8 +52,8 @@ export const LoginPage = () => {
                             onChange={(e) => form.setFormValue('email', e.target.value)}
                             required
                         />
-                    </div>
-                    <div className='grid gap-2'>
+                    </FormSection>
+                    <FormSection>
                         <div className='flex items-center'>
                             <Label htmlFor='password'>Password</Label>
                             <a
@@ -68,13 +70,13 @@ export const LoginPage = () => {
                             onChange={(e) => form.setFormValue('password', e.target.value)}
                             required
                         />
-                    </div>
+                    </FormSection>
                 </form>
             </CardContent>
             <CardFooter className='flex-col gap-2'>
-                <Button type='button' className='w-full' disabled={!form.isValid || !form.isDirty || form.isSubmitting} onClick={() => form.submit()}>
-                    {form.isSubmitting ? <Spinner /> : 'Login'}
-                </Button>
+                <SubmitButton form={form} className='w-full'>
+                    Login
+                </SubmitButton>
                 <Button variant='outline' className='w-full' disabled={form.isSubmitting}>
                     Sign Up
                 </Button>

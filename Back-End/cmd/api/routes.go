@@ -16,6 +16,7 @@ func (app *application) routes() http.Handler {
 
 	// user routes
 	router.POST("/api/users/login", app.nonAuthUsersMiddleware(app.loginUser))
+	router.GET("/api/users", app.authUsersMiddleware(app.queryUser))
 	//router.POST("/api/users/register", app.nonAuthUsersMiddleware(app.createUser))
 	//router.PATCH("/api/users/edit", app.authUsersMiddleware(app.editUser))
 

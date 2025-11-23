@@ -29,7 +29,7 @@ export function useDataFetcher<T>(fetcher: () => Promise<T>) {
         };
 
         fetchData();
-    });
+    }, []);
 
     return {
         data,

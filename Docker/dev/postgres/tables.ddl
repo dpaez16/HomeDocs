@@ -5,7 +5,7 @@ create table users (
     , lastname         varchar(128)
     , email            varchar(256)    not null
     , password         varchar(128)    not null
-    , rights           int4            default 0 not null
+    , rights           int4            default 1 not null
 
     , constraint userid_pk      primary key (userid)
     , constraint unique_email   unique (email)
