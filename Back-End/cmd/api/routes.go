@@ -15,7 +15,7 @@ func (app *application) routes() http.Handler {
 	router.GET("/api/handshake", app.authUsersMiddleware(app.handshakeHandler))
 
 	// user routes
-	router.GET("/api/users/login", app.nonAuthUsersMiddleware(app.loginUser))
+	router.POST("/api/users/login", app.nonAuthUsersMiddleware(app.loginUser))
 	//router.POST("/api/users/register", app.nonAuthUsersMiddleware(app.createUser))
 	//router.PATCH("/api/users/edit", app.authUsersMiddleware(app.editUser))
 

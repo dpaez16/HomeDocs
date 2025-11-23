@@ -1,5 +1,5 @@
 import type { JWT, UserSession } from "@/types/userSession";
-import { createGETRequest } from "./utils";
+import { createGETRequest, createPOSTRequest } from "./utils";
 
 /**
  * Attempts to sign the user to the application.
@@ -9,12 +9,7 @@ import { createGETRequest } from "./utils";
  * @returns A promise resolving to a session object.
  */
 export function loginUser(email: string, password: string) {
-    const params = new URLSearchParams({
-        email,
-        password,
-    });
-
-    return createGETRequest('/users/login', params)
+    return createPOSTRequest('/users/login', { email, password })
         .then((json) => {
             return json as UserSession;
         })

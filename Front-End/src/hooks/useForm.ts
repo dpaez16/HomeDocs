@@ -3,6 +3,7 @@ import { useState } from "react";
 interface UseFormParams<T extends object> {
     defaultValues: T;
     onSubmit: (formValues: T) => Promise<void>;
+    validator?: (formValues: T) => boolean;
 }
 
 export function useForm<T extends object>(props: UseFormParams<T>) {
@@ -33,14 +34,16 @@ export function useForm<T extends object>(props: UseFormParams<T>) {
             });
     };
 
+    const isValid = props.validator ? props.validator(formData) : true;
+
     return {
         formData,
         isDirty: JSON.stringify(formData) !== JSON.stringify(props.defaultValues),
         isSubmitting,
+        isValid,
         getFormValue: getValue,
         setFormValue: setValue,
         resetForm: reset,
         submit,
     } as const;
 }
-
