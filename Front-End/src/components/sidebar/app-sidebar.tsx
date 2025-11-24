@@ -1,4 +1,4 @@
-import { User, Users2 } from "lucide-react"
+import { BookType, FileStack, FileType, NotepadTextDashed, TableOfContents, User, Users2 } from "lucide-react"
 
 import {
     Sidebar,
@@ -22,13 +22,43 @@ export const AppSidebar = () => {
 
     const readerAuthorItems = [
         {
-            title: 'Edit Profile',
+            title: 'My Documents',
+            url: '/documents',
+            icon: FileStack,
+        },
+        {
+            title: 'Manuals',
+            url: '/manuals',
+            icon: TableOfContents,
+        },
+        {
+            title: 'Profile',
             url: '/',
             icon: User,
         }
     ];
 
     const adminItems = [
+        {
+            title: 'File Types',
+            url: '/admin/file-types',
+            icon: FileType,
+        },
+        {
+            title: 'Document Types',
+            url: '/admin/doc-types',
+            icon: BookType,
+        },
+        {
+            title: 'Document Templates',
+            url: '/admin/doc-templates',
+            icon: NotepadTextDashed,
+        },
+        {
+            title: 'Manuals',
+            url: '/admin/manuals',
+            icon: TableOfContents,
+        },
         {
             title: 'Users',
             url: '/admin/users',

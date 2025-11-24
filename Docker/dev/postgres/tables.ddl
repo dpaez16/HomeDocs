@@ -35,7 +35,7 @@ create table doctemplate (
     , doctypeid         int4            not null
     , name              varchar(256)    not null
     , status            int2            not null
-    , filetypeid        int4            not null
+    , filetypeid        int4            not null -- make this an array? join table?
 
     , constraint doctemplateid_pk primary key (doctemplateid)
     , foreign key (doctypeid) references doctype (doctypeid) on delete cascade
