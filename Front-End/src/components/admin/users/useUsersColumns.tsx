@@ -15,6 +15,10 @@ export const useUsersColumns = () => {
             accessorKey: 'name',
             columnHeader: 'Name',
             filterFn: textFilterFunc,
+            onClick: (entry) => {
+                const params = new URLSearchParams({ userID: entry.userID.toString() });
+                window.location.href = '/profile?' + params.toString();
+            },
         }),
         generateGenericTextColumn<UserEntry>({
             id: 'email',

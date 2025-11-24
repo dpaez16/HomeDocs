@@ -1,7 +1,7 @@
 import type { ColumnDef, Row, RowData } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "./data-table-column-header";
 
-export const clickableTableItemStyle = 'inline-block text-secondary whitespace-break-spaces font-medium text-left px-2 p-1.5 hover:bg-accent hover:cursor-pointer rounded-sm';
+export const clickableTableItemStyle = 'inline-block text-primary whitespace-break-spaces font-medium text-left px-2 p-1.5 hover:bg-accent hover:cursor-pointer rounded-sm';
 
 interface ColumnProps<T extends RowData> {
     id: string;

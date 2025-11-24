@@ -4,7 +4,6 @@ import * as React from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
-  type RowData,
   type SortingState,
   type VisibilityState,
   flexRender,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/table"
 import { DataTablePagination } from "./data-table-pagination";
 import type { DataTableToolbarProps } from "./data-table-toolbar";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -69,9 +69,9 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
+              {headerGroup.headers.map((header, idx) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className={cn(idx === 0 ? 'px-4' : '')}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
