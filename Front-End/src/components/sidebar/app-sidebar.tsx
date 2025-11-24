@@ -33,7 +33,7 @@ export const AppSidebar = () => {
         },
         {
             title: 'Profile',
-            url: '/',
+            url: '/profile',
             icon: User,
         }
     ];
