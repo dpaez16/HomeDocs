@@ -3,7 +3,6 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Spinner } from "../ui/spinner";
 import { loginUser } from "@/api/loginSession";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { UserSession } from "@/types/userSession";

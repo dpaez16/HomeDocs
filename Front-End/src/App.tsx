@@ -22,7 +22,7 @@ export const App = () => {
                 <Layout>
                     <div className='p-4'>
                         <Routes>
-                            <Route path='/' element={<UserProfile />} />
+                            <Route path='/profile' element={<UserProfile />} />
                             <Route path='/admin/users' element={<UsersPage />} />
                         </Routes>
                     </div>

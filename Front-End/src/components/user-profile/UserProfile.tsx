@@ -16,8 +16,10 @@ import { Checkbox } from "../ui/checkbox";
 
 export const UserProfile = () => {
     const { userSession } = useContext(LoginSessionContext);
-    const userID = userSession!.user.userID;
     const jwt = userSession!.jwt;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userID = urlParams.has('userID') ? parseInt(urlParams.get('userID')!) : userSession!.user.userID;
 
     const { data: user, loading, error } = useDataFetcher(() => fetchUser(userID, jwt));
     const isAdmin = hasRight(user?.rights ?? 0, Rights.Admin);
@@ -36,6 +38,7 @@ export const UserProfile = () => {
                 !!formData.firstName
             );
         },
+        isLoadingServerSideData: loading,
         onSubmit: async (formData) => {
             console.log(formData);
         },

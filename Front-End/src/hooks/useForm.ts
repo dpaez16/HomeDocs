@@ -5,31 +5,30 @@ interface UseFormParams<T extends object> {
     defaultValues: T;
     onSubmit: (formValues: T) => Promise<void>;
     validator?: (formValues: T) => boolean;
+    isLoadingServerSideData?: boolean;
 }
 
 export function useForm<T extends object>(props: UseFormParams<T>) {
-    const [formData, setFormData] = useState({ ...props.defaultValues });
+    const [formData, setFormData] = useState(() => ({ ...props.defaultValues }));
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
+        if (props.isLoadingServerSideData) {
+            return;
+        }
+
         const update = () => {
-            if (!objectCompare(props.defaultValues, formData)) {
-                setFormData({ ...props.defaultValues });
-            }
+            setFormData({ ...props.defaultValues });
         };
 
         update();
-    }, [props.defaultValues]);
-
-    const getValue = <K extends keyof T>(k: K) => {
-        return formData[k];
-    };
+    }, [props.isLoadingServerSideData]);
 
     const setValue = <K extends keyof T>(k: K, v: T[K]) => {
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [k]: v,
-        });
+        }));
     };
 
     const reset = () => {
@@ -52,7 +51,6 @@ export function useForm<T extends object>(props: UseFormParams<T>) {
         isDirty: !objectCompare(formData, props.defaultValues),
         isSubmitting,
         isValid,
-        getFormValue: getValue,
         setFormValue: setValue,
         resetForm: reset,
         submit,
