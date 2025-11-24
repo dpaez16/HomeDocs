@@ -9,35 +9,34 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Route for fetching users.
-func (app *application) queryUsers(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	isBulkRequest := !r.URL.Query().Has("userID")
+// Route for fetching file types.
+func (app *application) queryFileTypes(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	isBulkRequest := !r.URL.Query().Has("fileTypeID")
 	conn := getReadConnection(r)
 
 	if !isBulkRequest {
-		userID, err := strconv.Atoi(r.URL.Query().Get("userID"))
-
+		fileTypeID, err := strconv.Atoi(r.URL.Query().Get("fileTypeID"))
 		if err != nil {
 			err = errors.Wrap(err, "strconv.Atoi")
 			app.errorResponse(w, r, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		filter := map[string]any{"userid": userID}
-		user, err := data.FindOneUser(conn, filter)
+		filter := map[string]any{"filetypeid": fileTypeID}
+		fileType, err := data.FindOneFileType(conn, filter)
 
 		if err != nil {
-			err = errors.Wrap(err, "FindOneUser")
+			err = errors.Wrap(err, "FindOneFileType")
 			app.serverErrorResponse(w, r, err)
 			return
 		}
 
-		if user == nil {
-			app.errorResponse(w, r, http.StatusBadRequest, "Unable to find user.")
+		if fileType == nil {
+			app.errorResponse(w, r, http.StatusBadRequest, "Unable to find file type.")
 			return
 		}
 
-		data := jsondata{"user": user}
+		data := jsondata{"filetype": fileType}
 		err = app.writeJSON(w, http.StatusOK, data, nil)
 		if err != nil {
 			err = errors.Wrap(err, "writeJSON")
@@ -47,14 +46,14 @@ func (app *application) queryUsers(w http.ResponseWriter, r *http.Request, _ htt
 		return
 	}
 
-	users, err := data.GetAllUsers(conn)
+	fileTypes, err := data.GetAllFileTypes(conn)
 	if err != nil {
-		err = errors.Wrap(err, "GetAllUsers")
+		err = errors.Wrap(err, "GetAllFileTypes")
 		app.serverErrorResponse(w, r, err)
 		return
 	}
 
-	data := jsondata{"users": users}
+	data := jsondata{"filetypes": fileTypes}
 	err = app.writeJSON(w, http.StatusOK, data, nil)
 	if err != nil {
 		err = errors.Wrap(err, "writeJSON")

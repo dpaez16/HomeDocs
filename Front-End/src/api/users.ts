@@ -17,3 +17,17 @@ export function fetchUser(userID: UserID, jwt: JWT) {
             throw new Error(`Could not fetch user: ${err.message}`);
         });
 }
+
+/**
+ * Fetches all users.
+ *
+ * @param jwt The user's login session token.
+ * @returns A promise resolving to a list of users.
+ */
+export function fetchAllUsers(jwt: JWT) {
+    return createGETRequest('/users', undefined, jwt)
+        .then((json) => json.users as User[])
+        .catch((err) => {
+            throw new Error(`Could not fetch users: ${err.message}`);
+        });
+}

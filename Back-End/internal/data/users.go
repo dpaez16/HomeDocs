@@ -58,6 +58,20 @@ func FindOneUser(readConn db.ReadDBExecutor, filter map[string]any) (*User, erro
 	return user, nil
 }
 
+func GetAllUsers(readConn db.ReadDBExecutor) ([]*User, error) {
+	entries := []*User{}
+	query := `
+		SELECT *
+		  FROM users
+	`
+	err := readConn.Select(&entries, query)
+	if err != nil {
+		return nil, errors.Wrap(err, "Select")
+	}
+
+	return entries, nil
+}
+
 // Searches for a user in the context of logging in.
 // If a runtime error occurs, a nil user and error is returned.
 // Otherwise, a user and nil error is returned.

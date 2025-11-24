@@ -9,7 +9,7 @@ async function handleResponse(response: Response) {
     return response.json();
 }
 
-function createJSONBodyRequest(method: 'POST' | 'PATCH', path: string, body: object, jwt?: JWT) {
+function createJSONBodyRequest(method: 'POST' | 'PATCH' | 'DELETE', path: string, body: object, jwt?: JWT) {
     const url = '/api' + path;
 
     return fetch(url, {
@@ -69,4 +69,16 @@ export function createPOSTRequest(path: string, body: object, jwt?: JWT) {
  */
 export function createPATCHRequest(path: string, body: object, jwt?: JWT) {
     return createJSONBodyRequest('PATCH', path, body, jwt);
+}
+
+/**
+ * Constructs a DELETE request.
+ *
+ * @param path The backend route to send the request to.
+ * @param body Payload to include in the request.
+ * @param jwt JSON Web Token to include in the request, if supplied.
+ * @returns A promise that resolves to the results of the request.
+ */
+export function createDELETERequest(path: string, body: object, jwt?: JWT) {
+    return createJSONBodyRequest('DELETE', path, body, jwt);
 }

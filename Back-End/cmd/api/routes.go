@@ -16,9 +16,15 @@ func (app *application) routes() http.Handler {
 
 	// user routes
 	router.POST("/api/users/login", app.nonAuthUsersMiddleware(app.loginUser))
-	router.GET("/api/users", app.authUsersMiddleware(app.queryUser))
-	//router.POST("/api/users/register", app.nonAuthUsersMiddleware(app.createUser))
+	router.GET("/api/users", app.authUsersMiddleware(app.queryUsers))
+	//router.POST("/api/users/create", app.nonAuthUsersMiddleware(app.createUser))
 	//router.PATCH("/api/users/edit", app.authUsersMiddleware(app.editUser))
+
+	// filetype routes
+	router.GET("/api/filetypes", app.authUsersMiddleware(app.queryFileTypes))
+	router.POST("/api/filetypes/create", app.authUsersMiddleware(app.createFileType))
+	router.PATCH("/api/filetypes/edit", app.authUsersMiddleware(app.editFileType))
+	router.DELETE("/api/filetypes/delete", app.authUsersMiddleware(app.deleteFileType))
 
 	return app.recoverPanic(app.enableCORS(router))
 }
