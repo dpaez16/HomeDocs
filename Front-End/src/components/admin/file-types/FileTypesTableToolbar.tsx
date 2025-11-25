@@ -4,6 +4,7 @@ import { DatatableColumnFilter } from "@/components/ui/data-table/data-table-col
 
 export const FileTypesTableToolbar = ({
     table,
+    children,
 }: DataTableToolbarProps<FileType>) => {
     return (
         <DataTableToolbar table={table}>
@@ -11,6 +12,7 @@ export const FileTypesTableToolbar = ({
                 placeholder="Filter name..."
                 column={table.getColumn('name')}
             />
+            {children}
         </DataTableToolbar>
     );
 };
