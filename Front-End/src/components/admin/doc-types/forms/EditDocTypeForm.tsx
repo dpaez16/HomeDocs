@@ -1,5 +1,6 @@
 import { editDocType, fetchDocType } from "@/api/docTypes";
 import { FormInput } from "@/components/ui/form/form-input";
+import { FormRadioGroup } from "@/components/ui/form/form-radio-group";
 import { FormSection } from "@/components/ui/form/form-section";
 import { SubmitButton } from "@/components/ui/form/submit-button";
 import { UndoButton } from "@/components/ui/form/undo-button";
@@ -44,6 +45,23 @@ export const EditDocTypeForm: React.FC<EditDocTypeFormProps> = (props) => {
                     value={form.formData.name}
                     onChange={(e) => form.setFormValue('name', e.target.value)}
                     required
+                />
+            </FormSection>
+            <FormSection>
+                <FormRadioGroup
+                    label='Status'
+                    value={form.formData.status.toString()}
+                    onChange={v => form.setFormValue('status', parseInt(v))}
+                    options={[
+                        {
+                            label: 'Active',
+                            value: DocTypeStatus.Active.toString(),
+                        },
+                        {
+                            label: 'Archived',
+                            value: DocTypeStatus.Archived.toString(),
+                        },
+                    ]}
                 />
             </FormSection>
             <div className='grid grid-cols-2 gap-2'>
