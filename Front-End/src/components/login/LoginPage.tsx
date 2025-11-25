@@ -1,14 +1,15 @@
 import { useForm } from "@/hooks/useForm";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { loginUser } from "@/api/loginSession";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { UserSession } from "@/types/userSession";
 import { ComputerIcon } from "lucide-react";
 import { FormSection } from "@/components/ui/form/form-section";
-import { SubmitButton } from "../ui/form/submit-button";
+import { SubmitButton } from "@/components/ui/form/submit-button";
+import { FormInput } from "@/components/ui/form/form-input";
 
 export const LoginPage = () => {
     const { setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -43,10 +44,10 @@ export const LoginPage = () => {
             <CardContent>
                 <form className='flex flex-col gap-6'>
                     <FormSection>
-                        <Label htmlFor='email'>Email</Label>
-                        <Input
+                        <FormInput
                             id='email'
                             type='email'
+                            label='Email'
                             value={form.formData.email}
                             onChange={(e) => form.setFormValue('email', e.target.value)}
                             required
