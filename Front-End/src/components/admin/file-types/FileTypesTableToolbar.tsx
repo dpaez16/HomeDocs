@@ -1,6 +1,6 @@
 import { DataTableToolbar, type DataTableToolbarProps } from "@/components/ui/data-table/data-table-toolbar";
 import type { FileType } from "@/types/fileType";
-import { DatatableColumnFilter } from "@/components/ui/data-table/data-table-column-filter";
+import { DataTableColumnFilter } from "@/components/ui/data-table/data-table-column-filter";
 
 export const FileTypesTableToolbar = ({
     table,
@@ -8,7 +8,7 @@ export const FileTypesTableToolbar = ({
 }: DataTableToolbarProps<FileType>) => {
     return (
         <DataTableToolbar table={table}>
-            <DatatableColumnFilter
+            <DataTableColumnFilter
                 placeholder="Filter name..."
                 column={table.getColumn('name')}
             />
