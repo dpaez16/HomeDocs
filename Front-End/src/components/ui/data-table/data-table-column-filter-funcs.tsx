@@ -5,7 +5,8 @@ export function facetedFilterFunc<T extends RowData>(
     id: string,
     value: string[] | number[],
 ) {
-    return value.includes(row.getValue(id));
+    const cellValue = row.getValue<string>(id);
+    return value.includes(cellValue.toString() as never);
 }
 
 export function textFilterFunc<T extends RowData>(

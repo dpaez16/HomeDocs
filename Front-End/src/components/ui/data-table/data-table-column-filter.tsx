@@ -2,11 +2,11 @@ import type { Column } from '@tanstack/react-table';
 import { Input } from '../input';
 import { cn } from '@/lib/utils';
 
-interface DatatableColumnFilterProps<TData, TValue> extends React.InputHTMLAttributes<HTMLInputElement> {
+interface DataTableColumnFilterProps<TData, TValue> extends React.InputHTMLAttributes<HTMLInputElement> {
     column?: Column<TData, TValue>
 }
 
-export function DatatableColumnFilter<TData, TValue> ({ column, ...props }: DatatableColumnFilterProps<TData, TValue>) {
+export function DataTableColumnFilter<TData, TValue> ({ column, ...props }: DataTableColumnFilterProps<TData, TValue>) {
     return (
         <Input
             value={(column?.getFilterValue() as string) ?? ''}
