@@ -126,9 +126,9 @@ export function FacetedFilter({
             </PopoverTrigger>
             <PopoverContent className="w-full min-w-[300px] p-0" align="start">
                 <div className='text-sm w-full p-2 pb-0 flex flex-row items-center'>
-                    <SearchIcon className='text-secondary mr-2' size={18} />
+                    <SearchIcon className='text-primary mr-2' size={18} />
                     <Input
-                        className='border-none w-full outline-none text-secondary'
+                        className='border-none w-full outline-none text-primary'
                         placeholder={`Search ${title}...`}
                         value={filterText}
                         onChange={e => setFilterText(e.target.value)}
