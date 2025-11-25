@@ -43,7 +43,7 @@ export function createFileType(fileTypeData: FileTypePatchData, jwt: JWT) {
     return createPOSTRequest('/filetypes/create', fileTypeData, jwt)
         .then(() => true)
         .catch((err) => {
-            throw new Error(`Could not fetch file types: ${err.message}`);
+            throw new Error(`Could not create new file type: ${err.message}`);
         });
 }
 
@@ -58,7 +58,7 @@ export function editFileType(fileType: FileType, jwt: JWT) {
     return createPATCHRequest('/filetypes/edit', fileType, jwt)
         .then(() => true)
         .catch((err) => {
-            throw new Error(`Could not fetch file types: ${err.message}`);
+            throw new Error(`Could not edit file type: ${err.message}`);
         });
 }
 

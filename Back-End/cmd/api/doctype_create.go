@@ -9,18 +9,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-type editFileTypeBody struct {
-	FileTypeID int    `json:"fileTypeID"`
-	Name       string `json:"name"`
-	Editable   bool   `json:"editable"`
-	Indexable  bool   `json:"indexable"`
-	Diffable   bool   `json:"diffable"`
-	Extension  string `json:"extension"`
+type createDocTypeBody struct {
+	Name string `json:"name"`
 }
 
-// Route for editing a file type.
-func (app *application) editFileType(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	var body editFileTypeBody
+// Route for creating a doc type.
+func (app *application) createDocType(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var body createDocTypeBody
 	err := json.NewDecoder(r.Body).Decode(&body)
 
 	if err != nil {
@@ -36,16 +31,12 @@ func (app *application) editFileType(w http.ResponseWriter, r *http.Request, _ h
 		return
 	}
 
-	fileType := data.FileType{
-		Name:      body.Name,
-		Editable:  body.Editable,
-		Indexable: body.Indexable,
-		Diffable:  body.Diffable,
-		Extension: body.Extension,
+	docType := data.DocType{
+		Name: body.Name,
 	}
-	err = data.EditFileType(conn, body.FileTypeID, &fileType)
+	err = data.CreateDocType(conn, &docType)
 	if err != nil {
-		err = errors.Wrap(err, "EditFileType")
+		err = errors.Wrap(err, "CreateDocType")
 		app.serverErrorResponse(w, r, err)
 		return
 	}

@@ -9,18 +9,15 @@ import (
 	"github.com/pkg/errors"
 )
 
-type editFileTypeBody struct {
-	FileTypeID int    `json:"fileTypeID"`
-	Name       string `json:"name"`
-	Editable   bool   `json:"editable"`
-	Indexable  bool   `json:"indexable"`
-	Diffable   bool   `json:"diffable"`
-	Extension  string `json:"extension"`
+type editDocTypeBody struct {
+	DocTypeID int                `json:"docTypeID"`
+	Name      string             `json:"name"`
+	Status    data.DocTypeStatus `json:"status"`
 }
 
-// Route for editing a file type.
-func (app *application) editFileType(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	var body editFileTypeBody
+// Route for editing a doc type.
+func (app *application) editDocType(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var body editDocTypeBody
 	err := json.NewDecoder(r.Body).Decode(&body)
 
 	if err != nil {
@@ -36,16 +33,13 @@ func (app *application) editFileType(w http.ResponseWriter, r *http.Request, _ h
 		return
 	}
 
-	fileType := data.FileType{
-		Name:      body.Name,
-		Editable:  body.Editable,
-		Indexable: body.Indexable,
-		Diffable:  body.Diffable,
-		Extension: body.Extension,
+	docType := data.DocType{
+		Name:   body.Name,
+		Status: body.Status,
 	}
-	err = data.EditFileType(conn, body.FileTypeID, &fileType)
+	err = data.EditDocType(conn, body.DocTypeID, &docType)
 	if err != nil {
-		err = errors.Wrap(err, "EditFileType")
+		err = errors.Wrap(err, "EditDocType")
 		app.serverErrorResponse(w, r, err)
 		return
 	}

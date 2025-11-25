@@ -26,5 +26,11 @@ func (app *application) routes() http.Handler {
 	router.PATCH("/api/filetypes/edit", app.authUsersMiddleware(app.editFileType))
 	router.DELETE("/api/filetypes/delete", app.authUsersMiddleware(app.deleteFileType))
 
+	// doctype routes
+	router.GET("/api/doctypes", app.authUsersMiddleware(app.queryDocTypes))
+	router.POST("/api/doctypes/create", app.authUsersMiddleware(app.createDocType))
+	router.PATCH("/api/doctypes/edit", app.authUsersMiddleware(app.editDocType))
+	router.DELETE("/api/doctypes/delete", app.authUsersMiddleware(app.deleteDocType))
+
 	return app.recoverPanic(app.enableCORS(router))
 }

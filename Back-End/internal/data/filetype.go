@@ -122,7 +122,7 @@ func EditFileType(writeConn db.WriteDBExecutor, fileTypeID int, fileType *FileTy
 func DeleteFileType(writeConn db.WriteDBExecutor, fileTypeID int) error {
 	_, err := writeConn.Exec(`
 		DELETE FROM filetype
-		WHERE filetypeid = $6
+		WHERE filetypeid = $1
 	`, fileTypeID)
 
 	if err != nil {

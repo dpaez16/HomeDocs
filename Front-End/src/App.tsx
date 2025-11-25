@@ -7,6 +7,7 @@ import { Layout } from "./components/sidebar/layout";
 import { UserProfile } from "./components/user-profile/UserProfile";
 import { UsersPage } from "./components/admin/users/Users";
 import { FileTypesPage } from "./components/admin/file-types/FileTypes";
+import { DocTypesPage } from "./components/admin/doc-types/DocTypes";
 
 export const App = () => {
     const { localStorageValue: userSession, setLocalStorageValue: setUserSession } = useLocalStorage<UserSession>('userSession');
@@ -26,6 +27,7 @@ export const App = () => {
                             <Route path='/profile' element={<UserProfile />} />
                             <Route path='/admin/users' element={<UsersPage />} />
                             <Route path='/admin/file-types' element={<FileTypesPage />} />
+                            <Route path='/admin/doc-types' element={<DocTypesPage />} />
                         </Routes>
                     </div>
                 </Layout>

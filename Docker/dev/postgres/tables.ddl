@@ -22,6 +22,8 @@ create table filetype (
       , constraint filetypeid_pk primary key (filetypeid)
 );
 
+create unique index unique_extension on filetype (lower(extension));
+
 create table doctype (
       doctypeid         int4            generated always as identity
     , name              varchar(256)    not null
@@ -35,10 +37,17 @@ create table doctemplate (
     , doctypeid         int4            not null
     , name              varchar(256)    not null
     , status            int2            not null
-    , filetypeid        int4            not null -- make this an array? join table?
 
     , constraint doctemplateid_pk primary key (doctemplateid)
     , foreign key (doctypeid) references doctype (doctypeid) on delete cascade
+);
+
+create table associated_filetypes (
+      doctemplateid int4 not null
+    , filetypeid int4 not null
+
+    , constraint doctemplateid_filetypeid_unique unique (doctemplateid, filetypeid)
+    , foreign key (doctemplateid) references doctype (doctypeid) on delete cascade
     , foreign key (filetypeid) references filetype (filetypeid) on delete cascade
 );
 
