@@ -7,8 +7,8 @@ insert into users (firstname, lastname, email, password, rights) values
     7
 );
 
-insert into filetype (name, extension, editable, indexable, diffable) values ('PDF', 'pdf', true, true, true);
-insert into filetype (name, extension, editable, indexable, diffable) values ('Microsoft Word', 'docx', false, true, false);
+insert into filetype (name, extension, editable, indexable, diffable, is_canonical) values ('PDF', 'pdf', true, true, true, true);
+insert into filetype (name, extension, editable, indexable, diffable, is_canonical) values ('Microsoft Word', 'docx', false, true, false, true);
 
 insert into doctype (name, status) values ('Procedure', 0);
 insert into doctype (name, status) values ('Policy', 0);

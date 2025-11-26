@@ -5,7 +5,7 @@ import { FormSection } from "@/components/ui/form/form-section";
 import { SubmitButton } from "@/components/ui/form/submit-button";
 import { LoginSessionContext } from "@/context/LoginSessionContext";
 import { useForm } from "@/hooks/useForm";
-import type { FileTypePatchData } from "@/types/fileType";
+import type { FileTypePostData } from "@/types/fileType";
 import { useContext } from "react";
 
 interface CreateFileTypeFormProps {
@@ -16,7 +16,7 @@ export const CreateFileTypeForm: React.FC<CreateFileTypeFormProps> = (props) => 
     const { userSession } = useContext(LoginSessionContext);
     const jwt = userSession!.jwt;
 
-    const form = useForm<FileTypePatchData>({
+    const form = useForm<FileTypePostData>({
         defaultValues: {
             name: '',
             editable: false,

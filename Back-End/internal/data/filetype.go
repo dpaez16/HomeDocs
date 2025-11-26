@@ -9,12 +9,13 @@ import (
 )
 
 type FileType struct {
-	FileTypeID int32  `db:"filetypeid" json:"fileTypeID"`
-	Name       string `db:"name" json:"name"`
-	Editable   bool   `db:"editable" json:"editable"`
-	Indexable  bool   `db:"indexable" json:"indexable"`
-	Diffable   bool   `db:"diffable" json:"diffable"`
-	Extension  string `db:"extension" json:"extension"`
+	FileTypeID  int32  `db:"filetypeid" json:"fileTypeID"`
+	Name        string `db:"name" json:"name"`
+	Editable    bool   `db:"editable" json:"editable"`
+	Indexable   bool   `db:"indexable" json:"indexable"`
+	Diffable    bool   `db:"diffable" json:"diffable"`
+	Extension   string `db:"extension" json:"extension"`
+	IsCanonical bool   `db:"is_canonical" json:"isCanonical"`
 }
 
 // Finds one file type.
@@ -72,9 +73,9 @@ func GetAllFileTypes(readConn db.ReadDBExecutor) ([]*FileType, error) {
 func CreateFileType(writeConn db.WriteDBExecutor, fileType *FileType) error {
 	result, err := writeConn.Exec(`
 		INSERT INTO filetype
-		(name, editable, indexable, diffable, extension)
-		VALUES ($1, $2, $3, $4, $5)
-	`, fileType.Name, fileType.Editable, fileType.Indexable, fileType.Diffable, fileType.Extension)
+		(name, editable, indexable, diffable, extension, is_canonical)
+		VALUES ($1, $2, $3, $4, $5, $6)
+	`, fileType.Name, fileType.Editable, fileType.Indexable, fileType.Diffable, fileType.Extension, false)
 
 	if err != nil {
 		return errors.Wrap(err, "writeConn.Exec")
@@ -93,6 +94,7 @@ func CreateFileType(writeConn db.WriteDBExecutor, fileType *FileType) error {
 }
 
 func EditFileType(writeConn db.WriteDBExecutor, fileTypeID int, fileType *FileType) error {
+	// TODO: prevent canonical file types from being edited
 	result, err := writeConn.Exec(`
 		UPDATE filetype
 		SET   name 		= $1
@@ -120,6 +122,7 @@ func EditFileType(writeConn db.WriteDBExecutor, fileTypeID int, fileType *FileTy
 }
 
 func DeleteFileType(writeConn db.WriteDBExecutor, fileTypeID int) error {
+	// TODO: prevent canonical file types from being deleted
 	_, err := writeConn.Exec(`
 		DELETE FROM filetype
 		WHERE filetypeid = $1

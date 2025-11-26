@@ -5,7 +5,9 @@ export type FileType = {
     indexable: boolean;
     diffable: boolean;
     extension: string;
+    isCanonical: boolean;
 };
 
 export type FileTypeID = FileType['fileTypeID'];
-export type FileTypePatchData = Omit<FileType, 'fileTypeID'>;
+export type FileTypePostData = Omit<FileType, 'fileTypeID' | 'isCanonical'>;
+export type FileTypePatchData = Omit<FileType, 'isCanonical'>;

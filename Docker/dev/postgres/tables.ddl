@@ -18,6 +18,7 @@ create table filetype (
       , indexable           boolean             not null
       , diffable            boolean             not null
       , extension           varchar(32)         not null
+      , is_canonical        boolean             not null
 
       , constraint filetypeid_pk primary key (filetypeid)
 );
@@ -96,12 +97,14 @@ create table subrevision (
     , documentrevisionid    int4                        not null
     , subrevnum             int4                        not null
     , documentblobid        int4                        not null
+    , userid                int4                        not null
     , createdt              timestamp with time zone
 
     , constraint subrevisionid_pk primary key (subrevisionid)
     , constraint documentrevisionid_subrevnum_unique unique (documentrevisionid, subrevnum)
     , foreign key (documentrevisionid) references documentrevision (documentrevisionid) on delete cascade
     , foreign key (documentblobid) references documentblob (documentblobid) on delete cascade
+    , foreign key (userid) references users (userid) on delete cascade
 );
 
 create table manual (

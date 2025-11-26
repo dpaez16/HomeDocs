@@ -1,4 +1,4 @@
-import type { FileType, FileTypeID, FileTypePatchData } from "@/types/fileType";
+import type { FileType, FileTypeID, FileTypePatchData, FileTypePostData } from "@/types/fileType";
 import type { JWT } from "@/types/userSession";
 import { createGETRequest, createPOSTRequest, createPATCHRequest, createDELETERequest } from "./utils";
 
@@ -39,7 +39,7 @@ export function fetchAllFileTypes(jwt: JWT) {
  * @param jwt The user's login session token.
  * @returns A promise resolving to true if the operation was successful.
  */
-export function createFileType(fileTypeData: FileTypePatchData, jwt: JWT) {
+export function createFileType(fileTypeData: FileTypePostData, jwt: JWT) {
     return createPOSTRequest('/filetypes/create', fileTypeData, jwt)
         .then(() => true)
         .catch((err) => {
@@ -54,7 +54,7 @@ export function createFileType(fileTypeData: FileTypePatchData, jwt: JWT) {
  * @param jwt The user's login session token.
  * @returns A promise resolving to true if the operation was successful.
  */
-export function editFileType(fileType: FileType, jwt: JWT) {
+export function editFileType(fileType: FileTypePatchData, jwt: JWT) {
     return createPATCHRequest('/filetypes/edit', fileType, jwt)
         .then(() => true)
         .catch((err) => {

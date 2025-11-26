@@ -7,6 +7,7 @@ interface SubmitButtonProps {
     form: ReturnType<typeof useForm>;
     className?: string;
     children: React.ReactNode;
+    disabled?: boolean;
 }
 
 export const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
@@ -16,7 +17,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
         <Button
             type='button'
             className={cn(props.className)}
-            disabled={!form.isValid || !form.isDirty || form.isSubmitting}
+            disabled={!form.isValid || !form.isDirty || form.isSubmitting || !!props.disabled}
             onClick={() => form.submit()}
         >
             {form.isSubmitting ? <Spinner /> : props.children}

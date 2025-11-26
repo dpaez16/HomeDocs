@@ -1,12 +1,12 @@
 import type { useForm } from "@/hooks/useForm";
 import { Button } from "../button";
-import { Spinner } from "../spinner";
 import { cn } from "@/lib/utils";
 
 interface UndoButtonProps {
     form: ReturnType<typeof useForm>;
     className?: string;
     children: React.ReactNode;
+    disabled?: boolean;
 }
 
 export const UndoButton: React.FC<UndoButtonProps> = (props) => {
@@ -16,7 +16,7 @@ export const UndoButton: React.FC<UndoButtonProps> = (props) => {
         <Button
             type='button'
             className={cn(props.className)}
-            disabled={!form.isDirty || form.isSubmitting}
+            disabled={!form.isDirty || form.isSubmitting || !!props.disabled}
             onClick={() => form.resetForm()}
         >
             {props.children}
