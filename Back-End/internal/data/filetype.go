@@ -70,6 +70,16 @@ func GetAllFileTypes(readConn db.ReadDBExecutor) ([]*FileType, error) {
 	return entries, nil
 }
 
+func IsCanonicalFileType(conn db.ReadDBExecutor, fileTypeID int) (bool, error) {
+	filter := map[string]any{"filetypeid": fileTypeID}
+	fileType, err := FindOneFileType(conn, filter)
+	if err != nil {
+		return false, errors.Wrap(err, "FindOneFileType")
+	}
+
+	return fileType.IsCanonical, nil
+}
+
 func CreateFileType(writeConn db.WriteDBExecutor, fileType *FileType) error {
 	result, err := writeConn.Exec(`
 		INSERT INTO filetype
@@ -94,7 +104,15 @@ func CreateFileType(writeConn db.WriteDBExecutor, fileType *FileType) error {
 }
 
 func EditFileType(writeConn db.WriteDBExecutor, fileTypeID int, fileType *FileType) error {
-	// TODO: prevent canonical file types from being edited
+	isCanonical, err := IsCanonicalFileType(writeConn, fileTypeID)
+	if err != nil {
+		return errors.Wrap(err, "IsCanonicalFileType")
+	}
+
+	if isCanonical {
+		return errors.New("cannot modify canonical file type")
+	}
+
 	result, err := writeConn.Exec(`
 		UPDATE filetype
 		SET   name 		= $1
@@ -122,8 +140,16 @@ func EditFileType(writeConn db.WriteDBExecutor, fileTypeID int, fileType *FileTy
 }
 
 func DeleteFileType(writeConn db.WriteDBExecutor, fileTypeID int) error {
-	// TODO: prevent canonical file types from being deleted
-	_, err := writeConn.Exec(`
+	isCanonical, err := IsCanonicalFileType(writeConn, fileTypeID)
+	if err != nil {
+		return errors.Wrap(err, "IsCanonicalFileType")
+	}
+
+	if isCanonical {
+		return errors.New("cannot delete canonical file type")
+	}
+
+	_, err = writeConn.Exec(`
 		DELETE FROM filetype
 		WHERE filetypeid = $1
 	`, fileTypeID)
