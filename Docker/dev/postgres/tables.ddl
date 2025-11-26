@@ -31,6 +31,7 @@ create table doctype (
     , status            int2            not null
 
     , constraint doctypeid_pk primary key (doctypeid)
+    , constraint name_unique unique (name)
 );
 
 create table doctemplate (
@@ -40,6 +41,7 @@ create table doctemplate (
     , status            int2            not null
 
     , constraint doctemplateid_pk primary key (doctemplateid)
+    , constraint doctypeid_name_unique unique (doctypeid, name)
     , foreign key (doctypeid) references doctype (doctypeid) on delete cascade
 );
 
@@ -77,6 +79,7 @@ create table documentrevision (
     , keywords              varchar(512)
 
     , constraint documentrevisionid_pk primary key (documentrevisionid)
+    , constraint documentrevision_title_unique unique (title)
     , foreign key (documentid) references document (documentid) on delete cascade
     , foreign key (ownerid) references users (userid) on delete cascade
     , foreign key (doctypeid) references doctype (doctypeid) on delete cascade
@@ -114,6 +117,7 @@ create table manual (
     , status        int2            not null
 
     , constraint manualid_pk primary key (manualid)
+    , constraint manual_title_unique unique (title)
     , foreign key (ownerid) references users (userid) on delete cascade
 );
 
