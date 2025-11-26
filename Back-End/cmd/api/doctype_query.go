@@ -15,14 +15,14 @@ func (app *application) queryDocTypes(w http.ResponseWriter, r *http.Request, _ 
 	conn := getReadConnection(r)
 
 	if !isBulkRequest {
-		fileTypeID, err := strconv.Atoi(r.URL.Query().Get("docTypeID"))
+		docTemplateID, err := strconv.Atoi(r.URL.Query().Get("docTypeID"))
 		if err != nil {
 			err = errors.Wrap(err, "strconv.Atoi")
 			app.errorResponse(w, r, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		filter := map[string]any{"doctypeid": fileTypeID}
+		filter := map[string]any{"doctypeid": docTemplateID}
 		docType, err := data.FindOneDocType(conn, filter)
 
 		if err != nil {

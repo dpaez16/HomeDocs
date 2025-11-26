@@ -19,6 +19,7 @@ func (app *application) routes() http.Handler {
 	router.GET("/api/users", app.authUsersMiddleware(app.queryUsers))
 	//router.POST("/api/users/create", app.nonAuthUsersMiddleware(app.createUser))
 	//router.PATCH("/api/users/edit", app.authUsersMiddleware(app.editUser))
+	//router.DELETE("/api/users/delete", app.authUsersMiddleware(app.deleteUser))
 
 	// filetype routes
 	router.GET("/api/filetypes", app.authUsersMiddleware(app.queryFileTypes))
