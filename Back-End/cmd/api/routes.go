@@ -32,5 +32,11 @@ func (app *application) routes() http.Handler {
 	router.PATCH("/api/doctypes/edit", app.authUsersMiddleware(app.editDocType))
 	router.DELETE("/api/doctypes/delete", app.authUsersMiddleware(app.deleteDocType))
 
+	// doctemplate routes
+	router.GET("/api/doctemplates", app.authUsersMiddleware(app.queryDocTemplates))
+	router.POST("/api/doctemplates/create", app.authUsersMiddleware(app.createDocTemplate))
+	router.PATCH("/api/doctemplates/edit", app.authUsersMiddleware(app.editDocTemplate))
+	router.DELETE("/api/doctemplates/delete", app.authUsersMiddleware(app.deleteDocTemplate))
+
 	return app.recoverPanic(app.enableCORS(router))
 }
