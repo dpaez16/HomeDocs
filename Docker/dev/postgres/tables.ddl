@@ -87,13 +87,15 @@ create table documentrevision (
 );
 
 create table documentblob (
-      documentblobid        int4            generated always as identity
+      documentblobid        int4
     , contents              bytea
     , contents_vec          tsvector
     , contents_text         text
 
     , constraint documentblobid_pk primary key (documentblobid)
 );
+
+create sequence documentblobid start with 1 increment by 1 no cycle;
 
 create table subrevision (
       subrevisionid         int4                        generated always as identity
