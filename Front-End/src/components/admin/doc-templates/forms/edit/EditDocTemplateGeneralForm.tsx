@@ -40,41 +40,43 @@ export const EditDocTemplateGeneralForm: React.FC<EditDocTemplateGeneralFormProp
     });
 
     return (
-        <form className='flex flex-col gap-6'>
-            <FormSection>
-                <FormInput
-                    id='name'
-                    label='Name'
-                    value={form.formData.name}
-                    onChange={(e) => form.setFormValue('name', e.target.value)}
-                    required
-                />
-            </FormSection>
-            <FormSection>
-                <Label>Document Type</Label>
-                <SelectDocType
-                    value={form.formData.docTypeID !== SetinelDocTypeID ? form.formData.docTypeID : null}
-                    onChange={(newValue) => form.setFormValue('docTypeID', newValue !== null ? newValue : SetinelDocTypeID)}
-                    isLoading={loading}
-                />
-            </FormSection>
-            <FormSection>
-                <FormRadioGroup
-                    label='Status'
-                    value={form.formData.status.toString()}
-                    onChange={v => form.setFormValue('status', parseInt(v))}
-                    options={[
-                        {
-                            label: 'Active',
-                            value: DocTemplateStatus.Active.toString(),
-                        },
-                        {
-                            label: 'Archived',
-                            value: DocTemplateStatus.Archived.toString(),
-                        },
-                    ]}
-                />
-            </FormSection>
+        <form className='flex flex-col justify-between h-full'>
+            <div className='flex flex-col gap-6'>
+                <FormSection>
+                    <FormInput
+                        id='name'
+                        label='Name'
+                        value={form.formData.name}
+                        onChange={(e) => form.setFormValue('name', e.target.value)}
+                        required
+                    />
+                </FormSection>
+                <FormSection>
+                    <Label>Document Type</Label>
+                    <SelectDocType
+                        value={form.formData.docTypeID !== SetinelDocTypeID ? form.formData.docTypeID : null}
+                        onChange={(newValue) => form.setFormValue('docTypeID', newValue !== null ? newValue : SetinelDocTypeID)}
+                        isLoading={loading}
+                    />
+                </FormSection>
+                <FormSection>
+                    <FormRadioGroup
+                        label='Status'
+                        value={form.formData.status.toString()}
+                        onChange={v => form.setFormValue('status', parseInt(v))}
+                        options={[
+                            {
+                                label: 'Active',
+                                value: DocTemplateStatus.Active.toString(),
+                            },
+                            {
+                                label: 'Archived',
+                                value: DocTemplateStatus.Archived.toString(),
+                            },
+                        ]}
+                    />
+                </FormSection>
+            </div>
             <div className='grid grid-cols-2 gap-2'>
                 <SubmitButton form={form}>
                     Save

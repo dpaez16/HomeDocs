@@ -44,7 +44,7 @@ export const AssociatedFileTypesForm: React.FC<AssociatedFileTypesFormProps> = (
     });
 
     return (
-        <form className='flex flex-col gap-6'>
+        <form className='flex flex-col justify-between h-full'>
             <FormSection>
                 <Label>Associated File Types</Label>
                 <SelectFileTypes

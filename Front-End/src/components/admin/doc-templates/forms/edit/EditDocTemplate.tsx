@@ -17,21 +17,30 @@ export const EditDocTemplate: React.FC<EditDocTemplateProps> = (props) => {
     const defaultTab = EditDocTemplateTabs.General;
 
     return (
-        <Tabs defaultValue={EditDocTemplateTabs.General} value={tab} onValueChange={(v) => setTab(v as EditDocTemplateTabs)} className='mt-3'>
-            <TabsList defaultValue={defaultTab}>
-                <TabsTrigger value={EditDocTemplateTabs.General}>General</TabsTrigger>
-                <TabsTrigger value={EditDocTemplateTabs.AssociatedFileTypes}>Associated File Types</TabsTrigger>
-            </TabsList>
-            <TabsContent value={EditDocTemplateTabs.General}>
-                <EditDocTemplateGeneralForm
-                    docTemplateID={props.docTemplateID}
-                />
-            </TabsContent>
-            <TabsContent value={EditDocTemplateTabs.AssociatedFileTypes}>
-                <AssociatedFileTypesForm
-                    docTemplateID={props.docTemplateID}
-                />
-            </TabsContent>
+        <Tabs
+            defaultValue={EditDocTemplateTabs.General}
+            value={tab}
+            onValueChange={(v) => setTab(v as EditDocTemplateTabs)}
+            className='h-full'
+        >
+            <div className='flex flex-col gap-4 h-full'>
+                <TabsList defaultValue={defaultTab}>
+                    <TabsTrigger value={EditDocTemplateTabs.General}>General</TabsTrigger>
+                    <TabsTrigger value={EditDocTemplateTabs.AssociatedFileTypes}>Associated File Types</TabsTrigger>
+                </TabsList>
+                <div className='h-full'>
+                    <TabsContent value={EditDocTemplateTabs.General} className='h-full'>
+                        <EditDocTemplateGeneralForm
+                            docTemplateID={props.docTemplateID}
+                        />
+                    </TabsContent>
+                    <TabsContent value={EditDocTemplateTabs.AssociatedFileTypes} className='h-full'>
+                        <AssociatedFileTypesForm
+                            docTemplateID={props.docTemplateID}
+                        />
+                    </TabsContent>
+                </div>
+            </div>
         </Tabs>
     );
 };

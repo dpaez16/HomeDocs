@@ -20,7 +20,7 @@ export const NativeDialog: React.FC<NativeDialogProps> = (props) => {
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent
                 className={cn(
-                    'grid grid-rows-[2rem,auto]',
+                    'grid grid-rows-[1rem,auto]',
                     props.size === 'xl' ? 'max-w-6xl h-full sm:h-auto sm:max-h-[95dvh]' : '',
                     props.size === 'fullscreen' ? 'max-w-[99dvw] h-full sm:max-h-[95dvh]' : '',
                     props.className,
@@ -31,7 +31,7 @@ export const NativeDialog: React.FC<NativeDialogProps> = (props) => {
                         {props.dialogTitle}
                     </DialogTitle>
                 </DialogHeader>
-                <div className='overflow-hidden'>
+                <div className='overflow-hidden h-full'>
                     {props.children}
                 </div>
             </DialogContent>

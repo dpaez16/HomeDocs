@@ -69,6 +69,7 @@ export const DocTemplatesPage = () => {
                     refetch();
                 }}
                 dialogTitle='Edit Document Template'
+                className='h-1/2 flex flex-col'
             >
                 <EditDocTemplate
                     docTemplateID={editDocTemplateID ?? -1}
