@@ -72,7 +72,7 @@ create table documentrevision (
     , docstatus             int2                        not null
     , doctypeid             int4                        not null
     , doctemplateid         int4                        not null
-    , createdt              timestamp with time zone
+    , createdt              timestamp with time zone    not null
     , officialdt            timestamp with time zone
     , archiveddt            timestamp with time zone
     , notes                 varchar(1024)
