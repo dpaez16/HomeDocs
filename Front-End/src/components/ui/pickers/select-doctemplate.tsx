@@ -3,7 +3,7 @@ import { LoginSessionContext } from "@/context/LoginSessionContext";
 import { useDataFetcher } from "@/hooks/useDataFetcher";
 import { useContext, useMemo } from "react";
 import { SelectSingle } from "../select-single";
-import type { DocTemplateID } from "@/types/docTemplate";
+import { DocTemplateStatus, type DocTemplateID } from "@/types/docTemplate";
 
 interface SelectDocTemplateProps {
     value: DocTemplateID | null;
@@ -11,6 +11,7 @@ interface SelectDocTemplateProps {
     docTypeID: DocTemplateID;
     isLoading?: boolean;
     disabled?: boolean;
+    statuses?: DocTemplateStatus[];
 }
 
 export const SelectDocTemplate: React.FC<SelectDocTemplateProps> = (props) => {
@@ -23,13 +24,20 @@ export const SelectDocTemplate: React.FC<SelectDocTemplateProps> = (props) => {
             return [];
         }
 
+        const statuses = props.statuses ?? [DocTemplateStatus.Active];
+
         return data
-            .filter(dt => dt.docTypeID === props.docTypeID)
+            .filter(dt => {
+                return (
+                    dt.docTypeID === props.docTypeID &&
+                    (statuses.includes(dt.status) || props.value === dt.docTemplateID)
+                );
+            })
             .map(dt => ({
                 label: dt.name,
                 value: dt.docTemplateID.toString(),
             }));
-    }, [data, props.docTypeID]);
+    }, [data, props.docTypeID, props.statuses, props.value]);
 
     return (
         <SelectSingle

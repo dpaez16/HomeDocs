@@ -4,13 +4,14 @@ import { useDataFetcher } from "@/hooks/useDataFetcher";
 import { useContext, useMemo } from "react";
 import { SelectSingle } from "../select-single";
 import { constructFullName } from "@/utils/users";
-import type { UserID } from "@/types/user";
+import type { UserID, UserRights } from "@/types/user";
 
 interface SelectUserProps {
     value: UserID | null;
     onChange: (newValue: UserID | null) => void;
     isLoading?: boolean;
     disabled?: boolean;
+    rights: UserRights;
 }
 
 export const SelectUser: React.FC<SelectUserProps> = (props) => {
@@ -23,11 +24,18 @@ export const SelectUser: React.FC<SelectUserProps> = (props) => {
             return [];
         }
 
-        return data.map(user => ({
-            label: constructFullName(user, 'firstMiddleLast'),
-            value: user.userID.toString(),
-        }));
-    }, [data]);
+        return data
+            .filter(user => {
+                return (
+                    ((props.rights & user.rights) > 0) ||
+                    props.value === user.userID
+                );
+            })
+            .map(user => ({
+                label: constructFullName(user, 'firstMiddleLast'),
+                value: user.userID.toString(),
+            }));
+    }, [data, props.rights, props.value]);
 
     return (
         <SelectSingle

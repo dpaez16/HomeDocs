@@ -3,13 +3,14 @@ import { LoginSessionContext } from "@/context/LoginSessionContext";
 import { useDataFetcher } from "@/hooks/useDataFetcher";
 import { useContext, useMemo } from "react";
 import { SelectSingle } from "../select-single";
-import type { DocTypeID } from "@/types/docType";
+import { DocTypeStatus, type DocTypeID } from "@/types/docType";
 
 interface SelectDocTypeProps {
     value: DocTypeID | null;
     onChange: (newValue: DocTypeID | null) => void;
     isLoading?: boolean;
     disabled?: boolean;
+    statuses?: DocTypeStatus[];
 }
 
 export const SelectDocType: React.FC<SelectDocTypeProps> = (props) => {
@@ -22,11 +23,15 @@ export const SelectDocType: React.FC<SelectDocTypeProps> = (props) => {
             return [];
         }
 
-        return data.map(dt => ({
-            label: dt.name,
-            value: dt.docTypeID.toString(),
-        }));
-    }, [data]);
+        const statuses = props.statuses ?? [DocTypeStatus.Active];
+
+        return data
+            .filter(dt => statuses.includes(dt.status) || props.value === dt.docTypeID)
+            .map(dt => ({
+                label: dt.name,
+                value: dt.docTypeID.toString(),
+            }));
+    }, [data, props.statuses, props.value]);
 
     return (
         <SelectSingle
