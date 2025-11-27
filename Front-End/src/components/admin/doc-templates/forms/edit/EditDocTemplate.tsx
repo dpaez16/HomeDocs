@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { EditDocTemplateGeneralForm } from "./EditDocTemplateGeneralForm";
+import { AssociatedFileTypesForm } from "./AssociatedFileTypesForm";
 
 interface EditDocTemplateProps {
     docTemplateID: number;
@@ -27,7 +28,9 @@ export const EditDocTemplate: React.FC<EditDocTemplateProps> = (props) => {
                 />
             </TabsContent>
             <TabsContent value={EditDocTemplateTabs.AssociatedFileTypes}>
-                <p>TODO</p>
+                <AssociatedFileTypesForm
+                    docTemplateID={props.docTemplateID}
+                />
             </TabsContent>
         </Tabs>
     );

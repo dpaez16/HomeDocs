@@ -39,5 +39,9 @@ func (app *application) routes() http.Handler {
 	router.PATCH("/api/doctemplates/edit", app.authUsersMiddleware(app.editDocTemplate))
 	router.DELETE("/api/doctemplates/delete", app.authUsersMiddleware(app.deleteDocTemplate))
 
+	// associated file types routes
+	router.GET("/api/associatedfiletypes", app.authUsersMiddleware(app.queryAssociatedFileTypes))
+	router.PATCH("/api/associatedfiletypes/edit", app.authUsersMiddleware(app.editAssociatedFileTypes))
+
 	return app.recoverPanic(app.enableCORS(router))
 }
