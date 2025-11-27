@@ -85,10 +85,10 @@ func IndexDocumentBlob(writeConn db.WriteDBExecutor, documentBlobID int) error {
 	return nil
 }
 
-func CreateDocumentBlob(writeConn db.WriteDBExecutor, contents []byte) error {
+func CreateDocumentBlob(writeConn db.WriteDBExecutor, contents []byte) (int64, error) {
 	documentBlobID, err := GetNextSequenceValue(writeConn, "documentblobid")
 	if err != nil {
-		return errors.Wrap(err, "GetNextSequenceValue")
+		return 0, errors.Wrap(err, "GetNextSequenceValue")
 	}
 
 	result, err := writeConn.Exec(`
@@ -98,17 +98,22 @@ func CreateDocumentBlob(writeConn db.WriteDBExecutor, contents []byte) error {
 	`, documentBlobID, contents)
 
 	if err != nil {
-		return errors.Wrap(err, "writeConn.Exec")
+		return 0, errors.Wrap(err, "writeConn.Exec")
 	}
 
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
-		return errors.Wrap(err, "RowsAffected")
+		return 0, errors.Wrap(err, "RowsAffected")
 	}
 
 	if rowsAffected != 1 {
-		return errors.New("failed to insert a new document blob")
+		return 0, errors.New("failed to insert a new document blob")
 	}
 
-	return IndexDocumentBlob(writeConn, int(documentBlobID))
+	err = IndexDocumentBlob(writeConn, int(documentBlobID))
+	if err != nil {
+		return 0, errors.Wrap(err, "IndexDocumentBlob")
+	}
+
+	return documentBlobID, nil
 }
