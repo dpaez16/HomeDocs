@@ -20,21 +20,28 @@ export const AppSidebar = () => {
     const { userSession } = useContext(LoginSessionContext);
     const user = userSession!.user;
 
+    const isReader = hasRight(user.rights, Rights.Reader);
+    const isAuthor = hasRight(user.rights, Rights.Author);
+    const isAdmin = hasRight(user.rights, Rights.Admin);
+
     const readerAuthorItems = [
         {
             title: 'My Documents',
             url: '/documents',
             icon: FileStack,
+            isVisible: isAuthor,
         },
         {
             title: 'Manuals',
             url: '/manuals',
             icon: TableOfContents,
+            isVisible: isReader || isAuthor,
         },
         {
             title: 'Profile',
             url: '/profile',
             icon: User,
+            isVisible: true,
         }
     ];
 
@@ -73,7 +80,7 @@ export const AppSidebar = () => {
                     <SidebarGroupLabel>{constructFullName(user, 'firstLast')}</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {readerAuthorItems.map((item) => (
+                            {readerAuthorItems.filter(item => item.isVisible).map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
                                         <Link to={item.url}>
@@ -87,7 +94,7 @@ export const AppSidebar = () => {
                     </SidebarGroupContent>
                 </SidebarGroup>
                 {
-                    hasRight(user.rights, Rights.Admin) &&
+                    isAdmin &&
                     <SidebarGroup>
                         <SidebarGroupLabel>Administration</SidebarGroupLabel>
                         <SidebarGroupContent>
