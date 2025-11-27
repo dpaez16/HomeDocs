@@ -33,7 +33,7 @@ func GetDocumentBlobByID(readConn db.ReadDBExecutor, documentBlobID int) (*Docum
 	return documentBlob, nil
 }
 
-func IndexDocument(writeConn db.WriteDBExecutor, documentBlobID int) error {
+func IndexDocumentBlob(writeConn db.WriteDBExecutor, documentBlobID int) error {
 	blob, err := GetDocumentBlobByID(writeConn, documentBlobID)
 	if err != nil {
 		return errors.Wrap(err, "GetDocumentBlobByID")
@@ -110,5 +110,5 @@ func CreateDocumentBlob(writeConn db.WriteDBExecutor, contents []byte) error {
 		return errors.New("failed to insert a new document blob")
 	}
 
-	return IndexDocument(writeConn, int(documentBlobID))
+	return IndexDocumentBlob(writeConn, int(documentBlobID))
 }
