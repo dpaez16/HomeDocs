@@ -55,7 +55,7 @@ create table associated_filetypes (
 );
 
 create table document (
-      documentid        int4            generated always as identity
+      documentid        int4
     , ownerid           int4            not null
 
     , constraint documentid_pk primary key (documentid)
@@ -63,7 +63,7 @@ create table document (
 );
 
 create table documentrevision (
-      documentrevisionid    int4                        generated always as identity
+      documentrevisionid    int4
     , documentid            int4                        not null
     , revnum                int4                        not null
     , title                 varchar(256)                not null
@@ -93,8 +93,6 @@ create table documentblob (
 
     , constraint documentblobid_pk primary key (documentblobid)
 );
-
-create sequence documentblobid start with 1 increment by 1 no cycle;
 
 create table subrevision (
       subrevisionid         int4                        generated always as identity
