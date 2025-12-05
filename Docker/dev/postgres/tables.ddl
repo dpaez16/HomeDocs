@@ -57,7 +57,6 @@ create table associated_filetypes (
 create table document (
       documentid        int4            generated always as identity
     , ownerid           int4            not null
-    , ispublic          boolean         not null
 
     , constraint documentid_pk primary key (documentid)
     , foreign key (ownerid) references users (userid) on delete cascade
