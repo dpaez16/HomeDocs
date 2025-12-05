@@ -11,25 +11,25 @@ import (
 type DocumentStatus int8
 
 const (
-	DocumentStatusDraft DocumentStatus = 0
+	DocumentStatusDraft    DocumentStatus = 0
 	DocumentStatusArchived DocumentStatus = 1
 	DocumentStatusOfficial DocumentStatus = 2
 )
 
 type DocumentRevision struct {
-	DocumentRevisionID int32 `db:"documentrevisionid" json:"documentRevisionID"`
-	DocumentID int32 `db:"documentid" json:"documentID"`
-	RevNum int `db:"revnum" json:"revNum"`
-	Title string `db:"title" json:"title"`
-	OwnerID int32 `db:"ownerid" json:"ownerID"`
-	DocStatus DocumentStatus `db:"docstatus" json:"docStatus"`
-	DocTypeID int32 `db:"doctypeid" json:"docTypeID"`
-	DocTemplateID int32 `db:"doctemplateid" json:"docTemplateID"`
-	CreateDT time.Time `db:"createdt" json:"createDT"`
-	OfficialDT null.Time `db:"officialdt" json:"officialDT"`
-	ArchivedDT null.Time `db:"archiveddt" json:"archivedDT"`
-	Notes null.String `db:"notes" json:"notes"`
-	Keywords null.String `db:"keywords" json:"keywords"`
+	DocumentRevisionID int32          `db:"documentrevisionid" json:"documentRevisionID"`
+	DocumentID         int32          `db:"documentid" json:"documentID"`
+	RevNum             int            `db:"revnum" json:"revNum"`
+	Title              string         `db:"title" json:"title"`
+	OwnerID            int32          `db:"ownerid" json:"ownerID"`
+	DocStatus          DocumentStatus `db:"docstatus" json:"docStatus"`
+	DocTypeID          int32          `db:"doctypeid" json:"docTypeID"`
+	DocTemplateID      int32          `db:"doctemplateid" json:"docTemplateID"`
+	CreateDT           time.Time      `db:"createdt" json:"createDT"`
+	OfficialDT         null.Time      `db:"officialdt" json:"officialDT"`
+	ArchivedDT         null.Time      `db:"archiveddt" json:"archivedDT"`
+	Notes              null.String    `db:"notes" json:"notes"`
+	Keywords           null.String    `db:"keywords" json:"keywords"`
 }
 
 func CreateDocumentRevision(writeConn db.WriteDBExecutor, documentRevision *DocumentRevision) (int64, error) {
@@ -75,7 +75,7 @@ func CreateDocumentRevision(writeConn db.WriteDBExecutor, documentRevision *Docu
 
 func GetNextRevNum(readConn db.ReadDBExecutor, documentID int) (int, error) {
 	var revNum int
-	err := readConn.Get(&subRevNum, `
+	err := readConn.Get(&revNum, `
 		SELECT max(revnum)
 		  FROM documentrevision
 		 WHERE documentid = $1
@@ -87,4 +87,3 @@ func GetNextRevNum(readConn db.ReadDBExecutor, documentID int) (int, error) {
 
 	return revNum + 1, nil
 }
-

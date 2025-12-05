@@ -8,12 +8,12 @@ import (
 )
 
 type SubRevision struct {
-	SubRevisionID int32 `db:"subrevisionid" json:"subRevisionID"`
-	DocumentRevisionID int32 `db:"documentrevisionid" json:"documentRevisionID"`
-	SubRevNum int `db:"subrevnum" json:"subrevnum"`
-	DocumentBlobID int32 `db:"documentblobid" json:"documentblobid"`
-	UserID int32 `db:"userid" json:"userid"`
-	CreateDT time.Time `db:"createdt" json:"createDT"`
+	SubRevisionID      int32     `db:"subrevisionid" json:"subRevisionID"`
+	DocumentRevisionID int32     `db:"documentrevisionid" json:"documentRevisionID"`
+	SubRevNum          int       `db:"subrevnum" json:"subrevnum"`
+	DocumentBlobID     int32     `db:"documentblobid" json:"documentblobid"`
+	UserID             int32     `db:"userid" json:"userid"`
+	CreateDT           time.Time `db:"createdt" json:"createDT"`
 }
 
 func CreateSubRevision(writeConn db.WriteDBExecutor, subRevision *SubRevision) error {
@@ -62,4 +62,3 @@ func GetNextSubRevNum(readConn db.ReadDBExecutor, documentRevisionID int) (int, 
 
 	return subRevNum + 1, nil
 }
-
